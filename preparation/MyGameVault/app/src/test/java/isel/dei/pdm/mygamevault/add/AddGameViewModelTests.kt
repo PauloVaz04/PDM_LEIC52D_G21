@@ -79,10 +79,10 @@ class AddGameViewModelTests {
         override suspend fun startSession(gameId: Long, platformId: Long) {}
         override suspend fun stopSession() {}
         override fun getCurrentlyPlaying(): Flow<List<CollectionEntry>> = flowOf(emptyList())
-        override fun getLatest(skip: Int, top: Int): Flow<List<CollectionEntry>> = flowOf(emptyList())
+        override fun getLatest(partialName: String?, skip: Int, top: Int): Flow<List<CollectionEntry>> = flowOf(emptyList())
         override fun searchByName(partialName: String, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flowOf(emptyList())
-        override fun searchByPlatforms(platforms: Set<Platform>, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flowOf(emptyList())
-        override fun searchByStates(states: Set<PlayStatus.State>, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flowOf(emptyList())
+        override fun searchByPlatforms(platforms: Set<Platform>, partialName: String?, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flowOf(emptyList())
+        override fun searchByStates(states: Set<PlayStatus.State>, partialName: String?, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flowOf(emptyList())
     }
 
     @Test

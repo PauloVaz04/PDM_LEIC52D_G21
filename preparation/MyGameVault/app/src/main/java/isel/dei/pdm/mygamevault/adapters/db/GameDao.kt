@@ -27,9 +27,10 @@ internal interface GameDao {
     @Query("""
         SELECT * FROM collection_entries 
         WHERE platformId IN (:platformIds)
+        AND (:partialName IS NULL OR gameId IN (SELECT id FROM games WHERE name LIKE '%' || :partialName || '%'))
         ORDER BY addedAt DESC LIMIT :top OFFSET :skip
     """)
-    fun searchByPlatforms(platformIds: Set<Long>, skip: Int, top: Int): Flow<List<CollectionEntryWithDetails>>
+    fun searchByPlatforms(platformIds: Set<Long>, partialName: String?, skip: Int, top: Int): Flow<List<CollectionEntryWithDetails>>
 
     /**
      * Searches for entries in the collection that are in one of the given [states].
@@ -38,18 +39,20 @@ internal interface GameDao {
     @Query("""
         SELECT * FROM collection_entries 
         WHERE state IN (:states)
+        AND (:partialName IS NULL OR gameId IN (SELECT id FROM games WHERE name LIKE '%' || :partialName || '%'))
         ORDER BY addedAt DESC LIMIT :top OFFSET :skip
     """)
-    fun searchByStates(states: Set<PlayStatus.State>, skip: Int, top: Int): Flow<List<CollectionEntryWithDetails>>
+    fun searchByStates(states: Set<PlayStatus.State>, partialName: String?, skip: Int, top: Int): Flow<List<CollectionEntryWithDetails>>
 
     /**
      * Returns the latest entries in the collection.
      */
     @Query("""
         SELECT * FROM collection_entries 
+        WHERE (:partialName IS NULL OR gameId IN (SELECT id FROM games WHERE name LIKE '%' || :partialName || '%'))
         ORDER BY addedAt DESC LIMIT :top OFFSET :skip
     """)
-    fun searchLatest(skip: Int, top: Int): Flow<List<CollectionEntryWithDetails>>
+    fun searchLatest(partialName: String?, skip: Int, top: Int): Flow<List<CollectionEntryWithDetails>>
 
     @Query("SELECT COUNT(*) FROM collection_entries")
     suspend fun count(): Int

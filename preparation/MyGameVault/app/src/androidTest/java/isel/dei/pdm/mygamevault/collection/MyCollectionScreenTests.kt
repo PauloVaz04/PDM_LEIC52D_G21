@@ -38,6 +38,7 @@ class MyCollectionScreenTests {
                 state = MyCollectionScreenState.Loading(),
                 onEntrySelected = {},
                 onFilterChange = {},
+                onSearchQueryChange = {},
                 onLoadNextPage = {}
             )
         }
@@ -54,6 +55,7 @@ class MyCollectionScreenTests {
                 state = MyCollectionScreenState.Idle(listOf(sampleEntry)),
                 onEntrySelected = {},
                 onFilterChange = {},
+                onSearchQueryChange = {},
                 onLoadNextPage = {}
             )
         }
@@ -71,6 +73,7 @@ class MyCollectionScreenTests {
                 state = MyCollectionScreenState.Idle(emptyList()),
                 onEntrySelected = {},
                 onFilterChange = {},
+                onSearchQueryChange = {},
                 onLoadNextPage = {}
             )
         }
@@ -88,6 +91,7 @@ class MyCollectionScreenTests {
                 state = MyCollectionScreenState.Idle(emptyList()),
                 onEntrySelected = {},
                 onFilterChange = { selectedFilter = it },
+                onSearchQueryChange = {},
                 onLoadNextPage = {}
             )
         }
@@ -108,6 +112,7 @@ class MyCollectionScreenTests {
                 state = MyCollectionScreenState.Idle(listOf(sampleEntry)),
                 onEntrySelected = { selectedEntry = it },
                 onFilterChange = {},
+                onSearchQueryChange = {},
                 onLoadNextPage = {}
             )
         }
@@ -134,6 +139,7 @@ class MyCollectionScreenTests {
                 state = state,
                 onEntrySelected = {},
                 onFilterChange = {},
+                onSearchQueryChange = {},
                 onLoadNextPage = {}
             )
         }

@@ -153,10 +153,10 @@ internal class RoomCollectionRepository(
         }
     }
 
-    override fun getLatest(skip: Int, top: Int): Flow<List<CollectionEntry>> {
-        Log.d(TAG, "getLatest: skip = $skip, top = $top")
+    override fun getLatest(partialName: String?, skip: Int, top: Int): Flow<List<CollectionEntry>> {
+        Log.d(TAG, "getLatest: partialName = $partialName, skip = $skip, top = $top")
         return performSearch(
-            gameDao.searchLatest(skip, top.coerceAtMost(MAX_LIMIT)),
+            gameDao.searchLatest(partialName, skip, top.coerceAtMost(MAX_LIMIT)),
             CollectionRepository.OrderBy.ADDED_AT
         )
     }
@@ -176,26 +176,28 @@ internal class RoomCollectionRepository(
 
     override fun searchByPlatforms(
         platforms: Set<Platform>,
+        partialName: String?,
         orderBy: CollectionRepository.OrderBy,
         skip: Int,
         top: Int
     ): Flow<List<CollectionEntry>> {
-        Log.d(TAG, "searchByPlatforms: platforms = ${platforms.map { it.id }}, orderBy = $orderBy, skip = $skip, top = $top")
+        Log.d(TAG, "searchByPlatforms: platforms = ${platforms.map { it.id }}, partialName = $partialName, orderBy = $orderBy, skip = $skip, top = $top")
         return performSearch(
-            gameDao.searchByPlatforms(platforms.map { it.id }.toSet(), skip, top.coerceAtMost(MAX_LIMIT)),
+            gameDao.searchByPlatforms(platforms.map { it.id }.toSet(), partialName, skip, top.coerceAtMost(MAX_LIMIT)),
             orderBy
         )
     }
 
     override fun searchByStates(
         states: Set<PlayStatus.State>,
+        partialName: String?,
         orderBy: CollectionRepository.OrderBy,
         skip: Int,
         top: Int
     ): Flow<List<CollectionEntry>> {
-        Log.d(TAG, "searchByStates: states = $states, orderBy = $orderBy, skip = $skip, top = $top")
+        Log.d(TAG, "searchByStates: states = $states, partialName = $partialName, orderBy = $orderBy, skip = $skip, top = $top")
         return performSearch(
-            gameDao.searchByStates(states, skip, top.coerceAtMost(MAX_LIMIT)),
+            gameDao.searchByStates(states, partialName, skip, top.coerceAtMost(MAX_LIMIT)),
             orderBy
         )
     }
