@@ -63,6 +63,3 @@
 * Lectures videos from Prof. Paulo Pereira (in Portuguese)
   * [Aula 1 (14/09/2026)](https://youtu.be/IkWP-G6ptZ0?si=zYA0nnZ07O45rtVU)
   * Aula 2 (18/09/2026)
-
-
-
