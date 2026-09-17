@@ -1,0 +1,100 @@
+package pt.isel.lei.pdm.counter.ui.crowdtally
+
+import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import pt.isel.lei.pdm.counter.domain.CrowdTallyInfo
+import pt.isel.lei.pdm.counter.domain.decrement
+import pt.isel.lei.pdm.counter.domain.increment
+import pt.isel.lei.pdm.counter.ui.theme.CounterTheme
+
+@Composable
+fun CrowdTallyScreen() {
+    Log.d("CrowdTallyScreen", "recomposition")
+
+    var state by mutableStateOf(CrowdTallyInfo(0))
+
+    CounterTheme() {
+        Log.d("CounterTheme", "Recomposition")
+        Scaffold() { innerPadding ->
+            Log.d("Scaffold", "Recomposition")
+
+            CrowdTallyContent(
+                state = state,
+                increment = { state = state.increment() },
+                decrement = { state = state.decrement() },
+                modifier = Modifier.padding(innerPadding)
+            )
+        }
+    }
+
+}
+
+@Composable
+private fun CrowdTallyContent(
+    state: CrowdTallyInfo,
+    increment: () -> Unit,
+    decrement: () -> Unit,
+    modifier: Modifier = Modifier
+
+) {
+    Row(
+        modifier = modifier.fillMaxSize(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+
+        Button(
+            onClick = decrement,
+            modifier = Modifier
+                .width(100.dp)
+                .height(100.dp)
+        ) {
+            Text(
+                text = "\uD83D\uDC4E",
+                fontSize = 50.sp
+            )
+        }
+        Text(
+            text = "${state.count}",
+            fontSize = 60.sp,
+            modifier = Modifier.padding(12.dp)
+        )
+        Button(
+            onClick = {
+                increment()
+                Log.d("CrowdTallyScreen", "${state.count}")
+            },
+            modifier = Modifier
+                .width(100.dp)
+                .height(100.dp)
+        ) {
+            Text(
+                text = "\uD83D\uDC4D",
+                fontSize = 50.sp
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+fun CrowdTallyScreenPreview() {
+    CrowdTallyScreen()
+}

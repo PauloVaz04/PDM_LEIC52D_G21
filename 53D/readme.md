@@ -1,6 +1,6 @@
 # Outline
 
-## Week 1 - 07/09/2025
+## Week 1 - 07/09/2026
 ### Subject: Course introduction and Android Development 101
 
 #### Topic breakdown:
@@ -27,7 +27,7 @@
 * [Preview your UI with composable previews | Jetpack Compose | Android Developers](https://developer.android.com/develop/ui/compose/tooling/previews)
 
 
-## Week 2 - 14/09/2025
+## Week 2 - 14/09/2026
 ### Subject: Building a UI with Jetpack Compose - Introduction
 
 #### Topic breakdown:
@@ -45,3 +45,23 @@
 * [State and Jetpack Compose](https://developer.android.com/develop/ui/compose/state#state-and-composition)
 * [Architecting your Compose UI](https://developer.android.com/develop/ui/compose/architecture)
 * [Guide to app architecture](https://developer.android.com/topic/architecture)
+
+
+## Week 3 - 21/09/2026
+### Subject: Building a UI with Jetpack Compose - Continuation
+
+#### Topic breakdown:
+* Architecting the UI: continuation
+  * Immutability
+  * View States
+* Automatic testing in Android
+  * Unit tests with JUnit
+  * Instrumented UI tests
+  * Testing @Composable functions with Compose Testing
+
+#### For reference:
+* [State and Jetpack Compose | Android Developers](https://developer.android.com/develop/ui/compose/state#managing-state) 
+* [Architecting your Compose UI | Jetpack Compose | Android Developers](https://developer.android.com/jetpack/compose/architecture)
+* [Guide to application architecture](https://developer.android.com/jetpack/guide)
+* [Test your Compose layout](https://developer.android.com/develop/ui/compose/testing) 
+* [Test apps on Android](https://developer.android.com/training/testing)

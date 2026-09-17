@@ -3,6 +3,9 @@ package pt.isel.lei.pdm.counter
 import org.junit.Test
 
 import org.junit.Assert.*
+import pt.isel.lei.pdm.counter.domain.CounterModel
+import pt.isel.lei.pdm.counter.domain.CrowdTallyInfo
+import pt.isel.lei.pdm.counter.domain.increment
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -19,4 +22,14 @@ class ExampleUnitTest {
         //  Assert
         assertEquals(inc.count, orig.count + 1)
     }
+    @Test
+    fun `CrowdTallyInfo increments as expected`() {
+        //  Arrange
+        val orig = CrowdTallyInfo(123)
+        //  Act
+        val inc = orig.increment()
+        //  Assert
+        assertEquals(inc.count, orig.count + 1)
+    }
+
 }
