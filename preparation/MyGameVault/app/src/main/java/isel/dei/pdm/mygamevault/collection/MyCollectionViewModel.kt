@@ -35,53 +35,60 @@ class MyCollectionViewModel(
 ) : ViewModel() {
 
     private val _filter = MutableStateFlow(CollectionFilter.LATEST)
+    private val _searchQuery = MutableStateFlow("")
     private val _requestedTop = MutableStateFlow(PAGE_SIZE)
     private var lastHandledNavigationId: String? = null
 
     /**
-     * The current state of the screen, derived declaratively from the filter.
+     * The current state of the screen, derived declaratively from the filter and search query.
      */
-    val state: StateFlow<MyCollectionScreenState> = combine(_filter, _requestedTop) { filter, top ->
-        filter to top
+    val state: StateFlow<MyCollectionScreenState> = combine(_filter, _requestedTop, _searchQuery) { filter, top, query ->
+        Triple(filter, top, query)
     }
-        .flatMapLatest { (filter, top) ->
+        .flatMapLatest { (filter, top, query) ->
+            val partialName = query.takeIf { it.isNotBlank() }
             val repositoryFlow = when (filter) {
-                CollectionFilter.LATEST -> repository.getLatest(skip = 0, top = top)
-                CollectionFilter.PLAYING -> repository.searchByStates(states = setOf(PlayStatus.State.PLAYING), skip = 0, top = top)
+                CollectionFilter.LATEST -> repository.getLatest(partialName = partialName, skip = 0, top = top)
+                CollectionFilter.PLAYING -> repository.searchByStates(states = setOf(PlayStatus.State.PLAYING), partialName = partialName, skip = 0, top = top)
                 CollectionFilter.FINISHED -> repository.searchByStates(
                     states = setOf(PlayStatus.State.FINISHED, PlayStatus.State.PLATINUM),
+                    partialName = partialName,
                     skip = 0,
                     top = top
                 )
-                CollectionFilter.PLATINUM -> repository.searchByStates(states = setOf(PlayStatus.State.PLATINUM), skip = 0, top = top)
-                CollectionFilter.BACKLOG -> repository.searchByStates(states = setOf(PlayStatus.State.BACKLOG), skip = 0, top = top)
+                CollectionFilter.PLATINUM -> repository.searchByStates(states = setOf(PlayStatus.State.PLATINUM), partialName = partialName, skip = 0, top = top)
+                CollectionFilter.BACKLOG -> repository.searchByStates(states = setOf(PlayStatus.State.BACKLOG), partialName = partialName, skip = 0, top = top)
             }
 
             repositoryFlow
                 .map<List<CollectionEntry>, MyCollectionScreenState> { entries ->
-                    Log.d(TAG, "fetchData: successfully collected ${entries.size} entries for filter $filter")
+                    Log.d(TAG, "fetchData: successfully collected ${entries.size} entries for filter $filter and query \"$query\"")
                     MyCollectionScreenState.Idle(
                         entries = entries,
                         filter = filter,
+                        searchQuery = query,
                         hasMore = entries.size >= top
                     )
                 }
                 .onStart {
-                    Log.d(TAG, "fetchData: started for filter $filter")
-                    emit(MyCollectionScreenState.Loading(filter = filter))
+                    Log.d(TAG, "fetchData: started for filter $filter and query \"$query\"")
+                    emit(MyCollectionScreenState.Loading(filter = filter, searchQuery = query))
                 }
                 .catch { error ->
                     Log.e(TAG, "fetchData: error occurred", error)
-                    emit(MyCollectionScreenState.Idle(filter = filter, error = error))
+                    emit(MyCollectionScreenState.Idle(filter = filter, searchQuery = query, error = error))
                 }
         }
         .scan(MyCollectionScreenState.Idle() as MyCollectionScreenState) { prevState, newState ->
             when (newState) {
                 is MyCollectionScreenState.Loading -> {
-                    val isLoadingMore = _requestedTop.value > PAGE_SIZE && newState.filter == prevState.filter
+                    val isLoadingMore = _requestedTop.value > PAGE_SIZE && 
+                        newState.filter == prevState.filter && 
+                        newState.searchQuery == prevState.searchQuery
                     MyCollectionScreenState.Loading(
                         entries = prevState.entries,
                         filter = newState.filter,
+                        searchQuery = newState.searchQuery,
                         hasMore = prevState.hasMore,
                         isLoadingMore = isLoadingMore
                     )
@@ -90,6 +97,7 @@ class MyCollectionViewModel(
                     MyCollectionScreenState.Idle(
                         entries = prevState.entries,
                         filter = newState.filter,
+                        searchQuery = newState.searchQuery,
                         hasMore = prevState.hasMore,
                         error = newState.error
                     )
@@ -104,6 +112,15 @@ class MyCollectionViewModel(
             initialValue = MyCollectionScreenState.Idle()
         )
 
+
+    /**
+     * Updates the current search query and triggers a new data fetch.
+     */
+    fun onSearchQueryChange(newQuery: String) {
+        Log.d(TAG, "onSearchQueryChange: newQuery = \"$newQuery\"")
+        _requestedTop.value = PAGE_SIZE
+        _searchQuery.value = newQuery
+    }
 
     /**
      * Updates the current filter and triggers a new data fetch.

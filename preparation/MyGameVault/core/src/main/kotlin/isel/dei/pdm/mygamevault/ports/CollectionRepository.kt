@@ -71,11 +71,16 @@ interface CollectionRepository {
     /**
      * Gets the most recently added entries in the collection.
      *
+     * @param partialName The partial name of the game to search for. Defaults to null.
      * @param skip The number of entries to skip. Defaults to 0.
      * @param top The maximum number of entries to return. Defaults to 20.
      * @return A flow that emits the list of matching entries.
      */
-    fun getLatest(skip: Int = 0, top: Int = 20): Flow<List<CollectionEntry>>
+    fun getLatest(
+        partialName: String? = null,
+        skip: Int = 0,
+        top: Int = 20
+    ): Flow<List<CollectionEntry>>
 
     /**
      * Searches for entries where the game name contains [partialName].
@@ -97,6 +102,7 @@ interface CollectionRepository {
      * Searches for entries belonging to any of the given [platforms].
      *
      * @param platforms The set of platforms to search for.
+     * @param partialName The partial name of the game to search for. Defaults to null.
      * @param orderBy The criteria to order the results by. Defaults to ADDED_AT.
      * @param skip The number of entries to skip. Defaults to 0.
      * @param top The maximum number of entries to return. Defaults to 20.
@@ -104,6 +110,7 @@ interface CollectionRepository {
      */
     fun searchByPlatforms(
         platforms: Set<Platform>,
+        partialName: String? = null,
         orderBy: OrderBy = OrderBy.ADDED_AT,
         skip: Int = 0,
         top: Int = 20
@@ -113,6 +120,7 @@ interface CollectionRepository {
      * Searches for entries in any of the given playing [states].
      *
      * @param states The set of playing statuses to search for.
+     * @param partialName The partial name of the game to search for. Defaults to null.
      * @param orderBy The criteria to order the results by. Defaults to ADDED_AT.
      * @param skip The number of entries to skip. Defaults to 0.
      * @param top The maximum number of entries to return. Defaults to 20.
@@ -120,6 +128,7 @@ interface CollectionRepository {
      */
     fun searchByStates(
         states: Set<PlayStatus.State>,
+        partialName: String? = null,
         orderBy: OrderBy = OrderBy.ADDED_AT,
         skip: Int = 0,
         top: Int = 20

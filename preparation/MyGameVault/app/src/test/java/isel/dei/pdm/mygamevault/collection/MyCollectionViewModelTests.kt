@@ -38,12 +38,14 @@ class MyCollectionViewModelTests {
         var lastSearchStates: Set<PlayStatus.State>? = null
         var lastTop: Int = 0
         var getLatestCalled = false
+        var lastPartialName: String? = null
 
         // Use a wrapper flow that we can suspend if needed
         var shouldSuspend = false
-        override fun getLatest(skip: Int, top: Int): Flow<List<CollectionEntry>> = flow {
+        override fun getLatest(partialName: String?, skip: Int, top: Int): Flow<List<CollectionEntry>> = flow {
             getLatestCalled = true
             lastTop = top
+            lastPartialName = partialName
             if (shouldSuspend) delay(1000.milliseconds)
             flow.collect { emit(it) }
         }
@@ -56,10 +58,14 @@ class MyCollectionViewModelTests {
         override suspend fun stopSession() {}
         override fun getCurrentlyPlaying(): Flow<List<CollectionEntry>> = flow
         override fun searchByName(partialName: String, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flow
-        override fun searchByPlatforms(platforms: Set<Platform>, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flow
-        override fun searchByStates(states: Set<PlayStatus.State>, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flow {
+        override fun searchByPlatforms(platforms: Set<Platform>, partialName: String?, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flow {
+            lastPartialName = partialName
+            flow.collect { emit(it) }
+        }
+        override fun searchByStates(states: Set<PlayStatus.State>, partialName: String?, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = flow {
             lastSearchStates = states
             lastTop = top
+            lastPartialName = partialName
             flow.collect { emit(it) }
         }
     }
@@ -115,6 +121,33 @@ class MyCollectionViewModelTests {
             setOf(PlayStatus.State.FINISHED, PlayStatus.State.PLATINUM),
             repository.lastSearchStates
         )
+    }
+
+    @Test
+    fun `changing search query triggers new search with partial name and resets pagination`() = runTest {
+        // Arrange
+        val repository = FakeRepository()
+        val sut = MyCollectionViewModel(repository)
+        runCurrent()
+
+        // Provide 20 items to enable pagination
+        repository.flow.value = List(20) { testEntry }
+        runCurrent()
+        assertTrue(sut.state.value.hasMore)
+
+        // Simulate a page load
+        sut.onLoadNextPage()
+        runCurrent()
+        assertEquals(40, repository.lastTop)
+
+        // Act
+        sut.onSearchQueryChange("Elden")
+        runCurrent()
+
+        // Assert
+        assertEquals("Elden", repository.lastPartialName)
+        assertEquals("Elden", sut.state.value.searchQuery)
+        assertEquals(20, repository.lastTop) // Resetted to PAGE_SIZE
     }
 
     @Test
@@ -282,7 +315,7 @@ class MyCollectionViewModelTests {
     fun `emits Idle with error when repository fails`() = runTest {
         // Arrange
         val repository = object : CollectionRepository {
-            override fun getLatest(skip: Int, top: Int): Flow<List<CollectionEntry>> = flow {
+            override fun getLatest(partialName: String?, skip: Int, top: Int): Flow<List<CollectionEntry>> = flow {
                 throw IllegalStateException("Test error")
             }
             override suspend fun save(entry: CollectionEntry) {}
@@ -293,8 +326,8 @@ class MyCollectionViewModelTests {
             override suspend fun stopSession() {}
             override fun getCurrentlyPlaying(): Flow<List<CollectionEntry>> = getLatest()
             override fun searchByName(partialName: String, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = getLatest()
-            override fun searchByPlatforms(platforms: Set<Platform>, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = getLatest()
-            override fun searchByStates(states: Set<PlayStatus.State>, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = getLatest()
+            override fun searchByPlatforms(platforms: Set<Platform>, partialName: String?, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = getLatest()
+            override fun searchByStates(states: Set<PlayStatus.State>, partialName: String?, orderBy: CollectionRepository.OrderBy, skip: Int, top: Int): Flow<List<CollectionEntry>> = getLatest()
         }
         val sut = MyCollectionViewModel(repository)
         

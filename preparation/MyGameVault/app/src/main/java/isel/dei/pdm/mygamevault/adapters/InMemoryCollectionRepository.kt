@@ -91,9 +91,9 @@ class InMemoryCollectionRepository : CollectionRepository {
         activeSession.value = null
     }
 
-    override fun getLatest(skip: Int, top: Int): Flow<List<CollectionEntry>> {
-        Log.d(TAG, "getLatest: skip = $skip, top = $top")
-        return searchInternal(null, emptySet(), emptySet(), CollectionRepository.OrderBy.ADDED_AT, skip, top)
+    override fun getLatest(partialName: String?, skip: Int, top: Int): Flow<List<CollectionEntry>> {
+        Log.d(TAG, "getLatest: partialName = $partialName, skip = $skip, top = $top")
+        return searchInternal(partialName, emptySet(), emptySet(), CollectionRepository.OrderBy.ADDED_AT, skip, top)
     }
 
     override fun searchByName(
@@ -108,22 +108,24 @@ class InMemoryCollectionRepository : CollectionRepository {
 
     override fun searchByPlatforms(
         platforms: Set<Platform>,
+        partialName: String?,
         orderBy: CollectionRepository.OrderBy,
         skip: Int,
         top: Int
     ): Flow<List<CollectionEntry>> {
-        Log.d(TAG, "searchByPlatforms: platforms = ${platforms.map { it.id }}, orderBy = $orderBy, skip = $skip, top = $top")
-        return searchInternal(null, platforms, emptySet(), orderBy, skip, top)
+        Log.d(TAG, "searchByPlatforms: platforms = ${platforms.map { it.id }}, partialName = $partialName, orderBy = $orderBy, skip = $skip, top = $top")
+        return searchInternal(partialName, platforms, emptySet(), orderBy, skip, top)
     }
 
     override fun searchByStates(
         states: Set<PlayStatus.State>,
+        partialName: String?,
         orderBy: CollectionRepository.OrderBy,
         skip: Int,
         top: Int
     ): Flow<List<CollectionEntry>> {
-        Log.d(TAG, "searchByStates: states = $states, orderBy = $orderBy, skip = $skip, top = $top")
-        return searchInternal(null, emptySet(), states, orderBy, skip, top)
+        Log.d(TAG, "searchByStates: states = $states, partialName = $partialName, orderBy = $orderBy, skip = $skip, top = $top")
+        return searchInternal(partialName, emptySet(), states, orderBy, skip, top)
     }
 
     private fun searchInternal(

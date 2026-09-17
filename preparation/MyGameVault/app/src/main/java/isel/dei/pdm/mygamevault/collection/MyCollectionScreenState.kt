@@ -17,6 +17,7 @@ enum class CollectionFilter {
  * Represents the possible states of the My Collection screen.
  * @property entries The list of games in the collection.
  * @property filter The current filter applied to the collection.
+ * @property searchQuery The current search query applied to the collection.
  * @property hasMore Whether there are more items to load.
  * @property isLoadingMore Whether a next page is currently being loaded.
  * @property error The exception that caused the failure, or null if no error occurred.
@@ -24,6 +25,7 @@ enum class CollectionFilter {
 sealed class MyCollectionScreenState(
     val entries: List<CollectionEntry> = emptyList(),
     val filter: CollectionFilter = CollectionFilter.LATEST,
+    val searchQuery: String = "",
     val hasMore: Boolean = false,
     val isLoadingMore: Boolean = false,
     val error: Throwable? = null
@@ -34,9 +36,10 @@ sealed class MyCollectionScreenState(
     class Idle(
         entries: List<CollectionEntry> = emptyList(),
         filter: CollectionFilter = CollectionFilter.LATEST,
+        searchQuery: String = "",
         hasMore: Boolean = false,
         error: Throwable? = null
-    ) : MyCollectionScreenState(entries, filter, hasMore, false, error)
+    ) : MyCollectionScreenState(entries, filter, searchQuery, hasMore, false, error)
 
     /**
      * The state when data is being fetched.
@@ -44,7 +47,8 @@ sealed class MyCollectionScreenState(
     class Loading(
         entries: List<CollectionEntry> = emptyList(),
         filter: CollectionFilter = CollectionFilter.LATEST,
+        searchQuery: String = "",
         hasMore: Boolean = false,
         isLoadingMore: Boolean = false
-    ) : MyCollectionScreenState(entries, filter, hasMore, isLoadingMore)
+    ) : MyCollectionScreenState(entries, filter, searchQuery, hasMore, isLoadingMore)
 }

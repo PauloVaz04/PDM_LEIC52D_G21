@@ -1,0 +1,65 @@
+# 51-52D course section's materials (by Prof. Paulo Pereira)
+
+## Lectures
+* [Live on Twitch](https://www.twitch.tv/paulo_pereira)
+* [Playlist on YouTube](https://www.youtube.com/@ProfPauloPereira)
+
+## Outline
+
+### Week 1 (07/09/2026) - Course introduction
+
+* Syllabus, teaching methodology and bibliography
+  * Evaluation
+  * Resources
+
+* Conversation about the course's methodology and the challenges in the Generative AI era
+  * Software Qualities (internal and external)
+    * Why they matter and to whom they matter
+  * The increasing relevance of Software Design and Software Engineering practices 
+
+* Preparation of the [development environment (Android Studio)](https://developer.android.com/studio/install)
+  * Android Studio installation and configuration
+  * Android Emulator installation and configuration
+  * Using a physical device for development and testing
+
+##### Some recommended books on software design and software engineering:
+* [Seriously Good Software, by Marco Faella](https://www.manning.com/books/seriously-good-software) (Introductory)
+* [Code that Fits in Your Head, by Mark Seemann](https://www.oreilly.com/library/view/code-that-fits/9780137464302/) (Intermediate)
+* [A Philosophy of Software Design, by John Ousterhout](https://www.amazon.com/dp/173210221X) (Intermediate)
+* [Release It!, by Michael T. Nygard](https://pragprog.com/titles/mnee2/release-it-second-edition/) (Intermediate to Professional)
+* [Domain-Driven Design, by Eric Evans](https://books.google.pt/books/about/Domain_driven_Design.html?id=7dlaMs0SECsC&redir_esc=y) (Professional)
+
+### Week 2 (14/09/2026) - Introduction to Android development
+* Android application development: introduction
+  * [Inversion of Control](https://martinfowler.com/bliki/InversionOfControl.html)
+  * Anatomy of an Android application
+* Activity
+  * Android component for hosting the UI
+  * Lifecycle (introduction)
+* Building a UI with Jetpack Compose (revision)
+  * Composable functions (State → @Composable → UI)
+  * Elementary composables (e.g., `Text`, `Button`, etc.)
+  * Layouts (e.g., `Row`, `Column`, `Box`, etc.)
+  * Stateless and Stateful composables
+  * Primitives for _view state_ management (`remember` and `mutableStateOf`)
+* Software Design considerations
+  * The value of immutability
+  * Separation of concerns (domain vs UI)
+
+##### Resources:
+* On Android and Compose:
+  * [Thinking in Compose](https://developer.android.com/develop/ui/compose/mental-model)
+  * [Compose layout basics](https://developer.android.com/jetpack/compose/layouts/basics)
+  * [Testing your Compose layout](https://developer.android.com/jetpack/compose/testing)
+  * [Preview your UI with composable previews](https://developer.android.com/develop/ui/compose/tooling/previews)
+* On Software Design and Engineering:
+  * [The Value of Values, by Rich Hickey](https://www.youtube.com/watch?v=-I-VpPMzG7c) (video)
+  * [Immutability we can afford. A look at modern programming languages, by Roman Elizarov](https://elizarov.medium.com/immutability-we-can-afford-10c0dcb8351d)
+  * [From Primitive Obsession to Domain Modelling](https://blog.ploeh.dk/2015/01/19/from-primitive-obsession-to-domain-modelling/)
+* Videos from the Prodigi course on Mobile Device Programming (in Portuguese)
+  * [Prodigi - Curso de PDM - M05 - Compose (Introdução)](https://www.youtube.com/watch?v=qAo7WkwewZ0&list=PL8XxoCaL3dBhS-THuPazx0BSAswof6wqh&index=6)
+  * [Prodigi - Curso de PDM - M06 - Compose Layouts](https://www.youtube.com/watch?v=IWumBm4olEs&list=PL8XxoCaL3dBhS-THuPazx0BSAswof6wqh&index=7)
+  * [Prodigi - Curso de PDM - M07 - Compose (Estado)](https://www.youtube.com/watch?v=fR_o9v40Co4)
+* Lectures videos from Prof. Paulo Pereira (in Portuguese)
+  * [Aula 1 (14/09/2026)](https://youtu.be/IkWP-G6ptZ0?si=zYA0nnZ07O45rtVU)
+  * Aula 2 (18/09/2026)
