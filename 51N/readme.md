@@ -44,4 +44,4 @@
 * [Preview your UI with composable previews | Jetpack Compose | Android Developers](https://developer.android.com/develop/ui/compose/tooling/previews)
 * [State and Jetpack Compose](https://developer.android.com/develop/ui/compose/state#state-and-composition)
 * [Architecting your Compose UI](https://developer.android.com/develop/ui/compose/architecture)
-* [Guide to app architecture](https://developer.android.com/topic/architectu
+* [Guide to app architecture](https://developer.android.com/topic/architecture)
