@@ -7,21 +7,31 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import isel.dei.pdm.demos.demo8puzzle.core.BOARD_SIDE
+import isel.dei.pdm.demos.demo8puzzle.core.Puzzle
+import isel.dei.pdm.demos.demo8puzzle.core.Tile
 import isel.dei.pdm.demos.demo8puzzle.ui.theme.Demo8PuzzleTheme
 
+const val PUZZLE_BOARD_TAG = "PuzzleBoard"
+
 @Composable
-fun PuzzleBoard(tiles: List<List<Int?>>) {
+fun PuzzleBoard(puzzle: Puzzle, onTileClicked: (Tile) -> Unit = { }) {
     Column(
         modifier = Modifier
+            .testTag(PUZZLE_BOARD_TAG)
             .border(2.dp, MaterialTheme.colorScheme.primary)
             .padding(4.dp),
     ) {
-        tiles.forEach { row ->
+        repeat(BOARD_SIDE) { row ->
             Row {
-                row.forEach { tile ->
-                    PuzzleTile(tile)
+                repeat(BOARD_SIDE) { col ->
+                    PuzzleTile(
+                        tile = puzzle[row, col],
+                        onTileClicked = onTileClicked
+                    )
                 }
             }
         }
@@ -33,11 +43,7 @@ fun PuzzleBoard(tiles: List<List<Int?>>) {
 fun PuzzleBoardPreview() {
     Demo8PuzzleTheme {
         PuzzleBoard(
-            tiles = listOf(
-                listOf(1, 2, 3),
-                listOf(4, 5, 6),
-                listOf(7, 8, null)
-            )
+            puzzle = Puzzle(1, 2, 3, 4, 5, 6, 7, 8, 0)
         )
     }
 }
