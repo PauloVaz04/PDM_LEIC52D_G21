@@ -31,6 +31,7 @@ import pt.isel.lei.pdm.counter.domain.increment
 import pt.isel.lei.pdm.counter.ui.counter.CounterScreen
 import pt.isel.lei.pdm.counter.ui.counter.CounterView
 import pt.isel.lei.pdm.counter.ui.crowdtally.CrowdTallyScreen
+import pt.isel.lei.pdm.counter.ui.crowdtally.CrowdTallyScreen2
 
 class MainActivity : LoggingActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +39,8 @@ class MainActivity : LoggingActivity() {
         enableEdgeToEdge()
 
         setContent {
-            CrowdTallyScreen()
+            // CrowdTallyScreen()
+            CrowdTallyScreen2()
         }
     }
 }
