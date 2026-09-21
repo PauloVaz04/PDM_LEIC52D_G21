@@ -61,5 +61,7 @@
   * [Prodigi - Curso de PDM - M06 - Compose Layouts](https://www.youtube.com/watch?v=IWumBm4olEs&list=PL8XxoCaL3dBhS-THuPazx0BSAswof6wqh&index=7)
   * [Prodigi - Curso de PDM - M07 - Compose (Estado)](https://www.youtube.com/watch?v=fR_o9v40Co4)
 * Lectures videos from Prof. Paulo Pereira (in Portuguese)
-  * [Aula 1 (14/09/2026)](https://youtu.be/IkWP-G6ptZ0?si=zYA0nnZ07O45rtVU)
-  * Aula 2 (18/09/2026)
+  * [Aula 1 (14/09/2026)](https://www.youtube.com/watch?v=IkWP-G6ptZ0&list=PLX4G3J1kqg4U&index=1)
+  * [Aula 2 (18/09/2026)](https://www.youtube.com/watch?v=yYw6U-0EArc&list=PLX4G3J1kqg4U&index=2)
+
+### Week 3 (21/09/2026) - Buiding a UI in Android: state management

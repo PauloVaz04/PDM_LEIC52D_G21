@@ -5,35 +5,40 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import isel.dei.pdm.demos.demo8puzzle.ui.PuzzleScreen
+import isel.dei.pdm.demos.demo8puzzle.ui.PuzzleScreenViewModel
 import isel.dei.pdm.demos.demo8puzzle.ui.theme.Demo8PuzzleTheme
 
 const val APP_TAG = "Demo8PuzzleApp"
 
 class MainActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<PuzzleScreenViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.v(APP_TAG, "onCreate()")
+        Log.v(APP_TAG, "onCreate() on ${hashCode()}")
         enableEdgeToEdge()
         setContent {
             Demo8PuzzleTheme {
-                PuzzleScreen()
+                PuzzleScreen(viewModel = viewModel)
             }
         }
     }
 
     override fun onStart() {
         super.onStart()
-        Log.v(APP_TAG, "onStart()")
+        Log.v(APP_TAG, "onStart() on ${hashCode()}")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.v(APP_TAG, "onStop()")
+        Log.v(APP_TAG, "onStop() on ${hashCode()}")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.v(APP_TAG, "onDestroy()")
+        Log.v(APP_TAG, "onDestroy() on ${hashCode()}")
     }
 }
