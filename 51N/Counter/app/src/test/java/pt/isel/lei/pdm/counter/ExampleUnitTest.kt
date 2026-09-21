@@ -5,6 +5,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import pt.isel.lei.pdm.counter.domain.CounterModel
 import pt.isel.lei.pdm.counter.domain.CrowdTallyInfo
+import pt.isel.lei.pdm.counter.domain.changeCapacity
 import pt.isel.lei.pdm.counter.domain.increment
 
 /**
@@ -22,14 +23,25 @@ class ExampleUnitTest {
         //  Assert
         assertEquals(inc.count, orig.count + 1)
     }
+
     @Test
     fun `CrowdTallyInfo increments as expected`() {
         //  Arrange
-        val orig = CrowdTallyInfo(123)
+        val orig = CrowdTallyInfo(123, 124)
         //  Act
         val inc = orig.increment()
         //  Assert
         assertEquals(inc.count, orig.count + 1)
+    }
+
+    @Test
+    fun `CrowdTallyInfo changeMax updates count if max is lower than current count`() {
+        //  Arrange
+        val orig = CrowdTallyInfo(5, 10)
+        //  Act
+        val newCount = orig.changeCapacity(2)
+        //  Assert
+        assertEquals(2, newCount.count)
     }
 
 }

@@ -18,6 +18,7 @@ import pt.isel.lei.pdm.counter.domain.increment
 import pt.isel.lei.pdm.counter.ui.counter.CounterScreen
 import pt.isel.lei.pdm.counter.ui.counter.CounterView
 import pt.isel.lei.pdm.counter.ui.crowdtally.CrowdTallyScreen
+import pt.isel.lei.pdm.counter.ui.crowdtally.CrowdTallyScreen2
 import pt.isel.lei.pdm.counter.ui.theme.CounterTheme
 
 
@@ -28,6 +29,7 @@ class MainActivity : LoggingActivity() {
         setContent {
             //CounterScreen()
             CrowdTallyScreen()
+            //CrowdTallyScreen2()
         }
     }
 }
