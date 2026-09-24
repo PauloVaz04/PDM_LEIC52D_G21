@@ -1,4 +1,4 @@
-package isel.dei.pdm.demos.demo8puzzle.ui
+package isel.dei.pdm.demos.demo8puzzle.play
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,10 +20,17 @@ import isel.dei.pdm.demos.demo8puzzle.core.Puzzle
 import isel.dei.pdm.demos.demo8puzzle.core.Tile
 import isel.dei.pdm.demos.demo8puzzle.ui.theme.Demo8PuzzleTheme
 
+/**
+ * Tags used to identify the relevant buttons in the UI (for testing purposes)
+ */
 const val START_BUTTON_TAG = "StartButton"
 const val RESET_BUTTON_TAG = "ResetButton"
 const val SOLVE_BUTTON_TAG = "SolveButton"
 
+/**
+ * Root composable for the play screen.
+ * @param viewModel The view model for this screen.
+ */
 @Composable
 fun PuzzleScreen(viewModel: PuzzleScreenViewModel) {
     PuzzleScreenContent(
@@ -35,6 +42,14 @@ fun PuzzleScreen(viewModel: PuzzleScreenViewModel) {
     )
 }
 
+/**
+ * Stateless composable for displaying the play screen actual contents.
+ * @param state The current state of the screen.
+ * @param onTileClicked Callback for when a tile is clicked.
+ * @param onStart Callback for when the start button is clicked.
+ * @param onReset Callback for when the reset button is clicked.
+ * @param onSolve Callback for when the solve button is clicked.
+ */
 @Composable
 private fun PuzzleScreenContent(
     state: PuzzleScreenState,

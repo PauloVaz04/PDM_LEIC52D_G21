@@ -1,4 +1,4 @@
-package isel.dei.pdm.demos.demo8puzzle.ui
+package isel.dei.pdm.demos.demo8puzzle.play
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -15,8 +15,16 @@ import isel.dei.pdm.demos.demo8puzzle.core.Puzzle
 import isel.dei.pdm.demos.demo8puzzle.core.Tile
 import isel.dei.pdm.demos.demo8puzzle.ui.theme.Demo8PuzzleTheme
 
+/**
+ * Tags used to identify the board for testing purposes.
+ */
 const val PUZZLE_BOARD_TAG = "PuzzleBoard"
 
+/**
+ * Composable function that displays a puzzle board.
+ * @param puzzle The puzzle to be displayed.
+ * @param onTileClicked Callback function to be invoked when a tile is clicked.
+ */
 @Composable
 fun PuzzleBoard(puzzle: Puzzle, onTileClicked: (Tile) -> Unit = { }) {
     Column(

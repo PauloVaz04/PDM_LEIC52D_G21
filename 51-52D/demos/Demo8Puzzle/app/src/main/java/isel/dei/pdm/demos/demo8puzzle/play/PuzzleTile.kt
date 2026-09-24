@@ -1,4 +1,4 @@
-package isel.dei.pdm.demos.demo8puzzle.ui
+package isel.dei.pdm.demos.demo8puzzle.play
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,6 +19,9 @@ import androidx.compose.ui.unit.sp
 import isel.dei.pdm.demos.demo8puzzle.core.Tile
 import isel.dei.pdm.demos.demo8puzzle.ui.theme.Demo8PuzzleTheme
 
+/**
+ * Tags used to identify the tiles for testing purposes.
+ */
 const val EMPTY_PUZZLE_TILE_TAG = "EmptyPuzzleTile"
 fun puzzleTileTag(value: Int) = "PuzzleTile-$value"
 
