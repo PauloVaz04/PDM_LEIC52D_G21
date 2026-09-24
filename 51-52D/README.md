@@ -61,7 +61,46 @@
   * [Prodigi - Curso de PDM - M06 - Compose Layouts](https://www.youtube.com/watch?v=IWumBm4olEs&list=PL8XxoCaL3dBhS-THuPazx0BSAswof6wqh&index=7)
   * [Prodigi - Curso de PDM - M07 - Compose (Estado)](https://www.youtube.com/watch?v=fR_o9v40Co4)
 * Lectures videos from Prof. Paulo Pereira (in Portuguese)
-  * [Aula 1 (14/09/2026)](https://www.youtube.com/watch?v=IkWP-G6ptZ0&list=PLX4G3J1kqg4U&index=1)
-  * [Aula 2 (18/09/2026)](https://www.youtube.com/watch?v=yYw6U-0EArc&list=PLX4G3J1kqg4U&index=2)
+  * [Aula 01 (14/09/2026)](https://www.youtube.com/watch?v=IkWP-G6ptZ0&list=PLX4G3J1kqg4U&index=1)
+  * [Aula 02 (18/09/2026)](https://www.youtube.com/watch?v=yYw6U-0EArc&list=PLX4G3J1kqg4U&index=2)
 
 ### Week 3 (21/09/2026) - Buiding a UI in Android: state management
+* State management in Android applications
+  * Presentation state (a.k.a. view state) vs application state
+* Building a UI with Jetpack Compose: state management
+  * Stateless and Stateful composables
+  * Primitives for _view state_ management (`remember` and `mutableStateOf`), revisited
+* Design considerations for state management
+  * State hoisting
+  * Designing the UI as a state machine: 
+    * The UI as a function of the state
+    * The UI as a state machine
+* The MVVM pattern (Model-View-ViewModel) in Android applications
+  * `ViewModel` class
+    * Purpose and applicability
+    * Life cycle and relationship with the Activity
+      * ViewModelStore and ViewModelStoreOwner
+  * Design considerations for state management, continued
+    * ViewModel while 
+      * Gateway to the domain model
+      * Local application state container to the screen
+      * Host of the execution of use case
+    * Screen as a visual materialization of the state contained in the view model
+* Automated testing on Android
+  * Automated tests for the domain model
+  * Automated UI Testing (Introduction)
+
+##### Resources:
+* On Android and Compose:
+  * [Architecting your Compose UI](https://developer.android.com/develop/ui/compose/architecture)
+  * [State in Compose](https://developer.android.com/jetpack/compose/state)
+  * [State Hoisting](https://developer.android.com/jetpack/compose/state#state-hoisting)
+  * [ViewModel overview](https://developer.android.com/topic/libraries/architecture/viewmodel)
+  * [ViewModel lifecycle](https://developer.android.com/topic/libraries/architecture/viewmodel#lifecycle)
+  * [Testing your Compose layout](https://developer.android.com/jetpack/compose/testing)
+* Videos from the Prodigi course on Mobile Device Programming (in Portuguese)
+  * [Prodigi - Curso de PDM - M04 - Activity](https://www.youtube.com/watch?v=2DGGvxAqNj4&list=PL8XxoCaL3dBhS-THuPazx0BSAswof6wqh&index=5)
+  * [Prodigi - Curso de PDM - M09 - ViewModel](https://www.youtube.com/watch?v=9vYmkeg72vg&list=PL8XxoCaL3dBhS-THuPazx0BSAswof6wqh&index=10)
+* Lectures videos from Prof. Paulo Pereira (in Portuguese)
+  * [Aula 03 (21/09/2026)](https://www.youtube.com/watch?v=L8VyU_gUitE&list=PLX4G3J1kqg4U&index=3)
+  * Aula 04 (25/09/2026) _(brevemente)_
