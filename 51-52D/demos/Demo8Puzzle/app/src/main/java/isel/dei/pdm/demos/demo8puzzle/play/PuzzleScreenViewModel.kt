@@ -9,6 +9,8 @@ import isel.dei.pdm.demos.demo8puzzle.APP_TAG
 import isel.dei.pdm.demos.demo8puzzle.buildLLogTag
 import isel.dei.pdm.demos.demo8puzzle.core.Puzzle
 import isel.dei.pdm.demos.demo8puzzle.core.Tile
+import isel.dei.pdm.demos.demo8puzzle.core.isSolved
+import isel.dei.pdm.demos.demo8puzzle.core.solvedPuzzle
 
 /**
  * The set of states that the puzzle screen can be in.
@@ -17,6 +19,7 @@ sealed class PuzzleScreenState {
     abstract val puzzle: Puzzle
     data class Idle(override val puzzle: Puzzle) : PuzzleScreenState()
     data class Solving(override val puzzle: Puzzle) : PuzzleScreenState()
+    data class Solved(override val puzzle: Puzzle) : PuzzleScreenState()
 }
 
 /**
@@ -32,34 +35,41 @@ class PuzzleScreenViewModel : ViewModel() {
     }
 
     var state by mutableStateOf<PuzzleScreenState>(
-        PuzzleScreenState.Idle(Puzzle(1, 2, 3, 4, 5, 6, 7, 8, 0))
+        PuzzleScreenState.Idle(solvedPuzzle)
     )
         private set
 
     fun moveTile(tile: Tile) {
         val current = state
         if (current is PuzzleScreenState.Solving) {
-            state = PuzzleScreenState.Solving(current.puzzle.move(tile))
+            val newPuzzle = current.puzzle.move(tile)
+            state = if (newPuzzle.isSolved()) {
+                PuzzleScreenState.Solved(newPuzzle)
+            } else {
+                PuzzleScreenState.Solving(newPuzzle)
+            }
         }
     }
 
     fun start() {
         val current = state
         if (current is PuzzleScreenState.Idle) {
-            state = PuzzleScreenState.Solving(current.puzzle)
+            state = PuzzleScreenState.Solving(current.puzzle.shuffle())
         }
     }
 
     fun reset() {
         val current = state
-        if (current is PuzzleScreenState.Solving) {
-            state = PuzzleScreenState.Idle(Puzzle(1, 2, 3, 4, 5, 6, 7, 8, 0))
+        if (current is PuzzleScreenState.Solving || current is PuzzleScreenState.Solved) {
+            state = PuzzleScreenState.Idle(solvedPuzzle)
         }
     }
 
     fun solve() {
-        // Will be implemented later
-        Log.v(APP_TAG, "PuzzleScreenViewModel.solve() - Not implemented yet")
+        val current = state
+        if (current is PuzzleScreenState.Solving) {
+            state = PuzzleScreenState.Solved(solvedPuzzle)
+        }
     }
 
     override fun onCleared() {

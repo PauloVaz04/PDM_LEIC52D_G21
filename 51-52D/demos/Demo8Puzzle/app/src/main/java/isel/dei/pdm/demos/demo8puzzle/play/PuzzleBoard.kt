@@ -24,9 +24,10 @@ const val PUZZLE_BOARD_TAG = "PuzzleBoard"
  * Composable function that displays a puzzle board.
  * @param puzzle The puzzle to be displayed.
  * @param onTileClicked Callback function to be invoked when a tile is clicked.
+ * @param enabled Whether the board is enabled or not.
  */
 @Composable
-fun PuzzleBoard(puzzle: Puzzle, onTileClicked: (Tile) -> Unit = { }) {
+fun PuzzleBoard(puzzle: Puzzle, onTileClicked: (Tile) -> Unit = { }, enabled: Boolean = true) {
     Column(
         modifier = Modifier
             .testTag(PUZZLE_BOARD_TAG)
@@ -38,7 +39,8 @@ fun PuzzleBoard(puzzle: Puzzle, onTileClicked: (Tile) -> Unit = { }) {
                 repeat(BOARD_SIDE) { col ->
                     PuzzleTile(
                         tile = puzzle[row, col],
-                        onTileClicked = onTileClicked
+                        onTileClicked = onTileClicked,
+                        enabled = enabled
                     )
                 }
             }
